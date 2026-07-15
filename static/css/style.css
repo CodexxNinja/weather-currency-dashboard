@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #f1f5f9;
+    min-height: 100vh;
+}
+
+.navbar {
+    padding: 20px 40px;
+}
+.navbar .logo {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 800px) {
+    .grid-layout { grid-template-columns: 1fr; }
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.card h2 {
+    font-size: 18px;
+    margin-bottom: 18px;
+}
+
+.inline-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.inline-form input,
+.currency-form input {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 14px;
+}
+.inline-form input::placeholder,
+.currency-form input::placeholder { color: #94a3b8; }
+
+button {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.15s ease;
+}
+button:hover { transform: translateY(-1px); }
+
+.error-msg {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.weather-result { margin-top: 20px; }
+
+.weather-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.weather-main img { width: 60px; height: 60px; }
+.weather-main .temp { font-size: 28px; font-weight: 700; }
+.weather-main .desc { color: #94a3b8; font-size: 14px; }
+
+.weather-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.weather-stats div {
+    background: rgba(255,255,255,0.05);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+.weather-stats span {
+    display: block;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.forecast-chart-wrapper {
+    margin-bottom: 20px;
+    height: 180px;
+}
+
+.forecast-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+.forecast-day {
+    background: rgba(255,255,255,0.05);
+    padding: 10px 6px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+}
+.forecast-day img { width: 30px; height: 30px; }
+.forecast-day span { display: block; color: #94a3b8; margin-bottom: 4px; font-size: 10px; }
+
+.currency-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.currency-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.currency-row input { text-transform: uppercase; }
+
+.conversion-result {
+    margin-top: 20px;
+    padding: 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+}
+.conversion-main { font-size: 16px; margin-bottom: 6px; }
+.conversion-rate { font-size: 13px; color: #94a3b8; }
+
+.autocomplete-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.suggestions-box {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1e293b;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.suggestion-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #f1f5f9;
+}
+.suggestion-item:hover {
+    background: rgba(59, 130, 246, 0.15);
+}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="grid-layout">
+
+    <!-- WEATHER CARD -->
+    <div class="card">
+        <h2>🌍 Weather Search</h2>
+        <form method="POST" class="inline-form">
+            <input type="hidden" name="form_type" value="weather">
+            <div class="autocomplete-wrapper">
+              <input type="text" id="cityInput" name="city" placeholder="Enter city name..." value="{{ city }}" autocomplete="off" required>
+               <div id="citySuggestions" class="suggestions-box"></div>
+            </div>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if weather_error %}
+            <p class="error-msg">{{ weather_error }}</p>
+        {% endif %}
+
+        {% if weather_info %}
+        <div class="weather-result">
+            <div class="weather-main">
+                <img src="https://openweathermap.org/img/wn/{{ weather_info.icon }}@2x.png" alt="weather icon">
+                <div>
+                    <h3>{{ weather_info.city }}, {{ weather_info.country }}</h3>
+                    <p class="temp">{{ weather_info.temp }}°C</p>
+                    <p class="desc">{{ weather_info.description }}</p>
+                </div>
+            </div>
+
+            <div class="weather-stats">
+                <div><span>Feels Like</span><strong>{{ weather_info.feels_like }}°C</strong></div>
+                <div><span>Humidity</span><strong>{{ weather_info.humidity }}%</strong></div>
+                <div><span>Wind Speed</span><strong>{{ weather_info.wind_speed }} m/s</strong></div>
+            </div>
+
+            {% if weather_info.forecast %}
+            <div class="forecast-chart-wrapper">
+                <canvas id="forecastChart"
+                    data-labels="{{ weather_info.forecast | map(attribute='date') | list | tojson }}"
+                    data-temps="{{ weather_info.forecast | map(attribute='temp') | list | tojson }}">
+                </canvas>
+            </div>
+
+            <div class="forecast-cards">
+                {% for day in weather_info.forecast %}
+                <div class="forecast-day">
+                    <span>{{ day.date }}</span>
+                    <img src="https://openweathermap.org/img/wn/{{ day.icon }}.png" alt="icon">
+                    <strong>{{ day.temp }}°C</strong>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- CURRENCY CARD -->
+    <div class="card">
+        <h2>💱 Currency Converter</h2>
+        <form method="POST" class="currency-form">
+            <input type="hidden" name="form_type" value="currency">
+            <input type="number" name="amount" placeholder="Amount" step="any" value="1" required>
+            <div class="currency-row">
+                <input list="currencyList" name="base_currency" placeholder="From (e.g. USD)" autocomplete="off" required>
+                <span>→</span>
+                <input list="currencyList" name="target_currency" placeholder="To (e.g. INR)" autocomplete="off" required>
+            </div>
+
+            <datalist id="currencyList">
+                <option value="USD">USD - US Dollar</option>
+                <option value="INR">INR - Indian Rupee</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="CHF">CHF - Swiss Franc</option>
+                <option value="CNY">CNY - Chinese Yuan</option>
+                <option value="SGD">SGD - Singapore Dollar</option>
+                <option value="AED">AED - UAE Dirham</option>
+                <option value="NZD">NZD - New Zealand Dollar</option>
+                <option value="ZAR">ZAR - South African Rand</option>
+                <option value="SEK">SEK - Swedish Krona</option>
+                <option value="KRW">KRW - South Korean Won</option>
+                <option value="BRL">BRL - Brazilian Real</option>
+                <option value="RUB">RUB - Russian Ruble</option>
+                <option value="MXN">MXN - Mexican Peso</option>
+                <option value="HKD">HKD - Hong Kong Dollar</option>
+                <option value="THB">THB - Thai Baht</option>
+            </datalist>
+
+            <button type="submit">Convert</button>
+        </form>
+
+        {% if conversion_error %}
+            <p class="error-msg">{{ conversion_error }}</p>
+        {% endif %}
+
+        {% if conversion_info %}
+        <div class="conversion-result">
+            <p class="conversion-main">
+                {{ conversion_info.amount }} {{ conversion_info.base }} =
+                <strong>{{ conversion_info.converted }} {{ conversion_info.target }}</strong>
+            </p>
+            <p class="conversion-rate">1 {{ conversion_info.base }} = {{ conversion_info.rate }} {{ conversion_info.target }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}
