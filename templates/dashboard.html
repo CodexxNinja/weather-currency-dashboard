@@ -2,73 +2,116 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 
-<div class="grid-layout">
+<div class="dashboard-flex-layout">
 
-    <!-- WEATHER CARD -->
-    <div class="card">
-        <h2>🌍 Weather Search</h2>
-        <form method="POST" class="inline-form">
-            <input type="hidden" name="form_type" value="weather">
-            <div class="autocomplete-wrapper">
-              <input type="text" id="cityInput" name="city" placeholder="Enter city name..." value="{{ city }}" autocomplete="off" required>
-               <div id="citySuggestions" class="suggestions-box"></div>
+    <!-- WEATHER WIDGET -->
+    <div class="content-panel weather-panel">
+        <div class="panel-header">
+            <div class="icon-avatar avatar-blue">
+                <i data-lucide="cloud-sun"></i>
             </div>
-            <button type="submit">Search</button>
+            <div>
+                <h2>Weather Center</h2>
+                <p>Check current conditions and trends</p>
+            </div>
+        </div>
+
+        <form method="POST" class="form-row">
+            <input type="hidden" name="form_type" value="weather">
+            <div class="input-container">
+                <i data-lucide="search" class="input-lead-icon"></i>
+                <input type="text" id="cityInput" name="city" placeholder="Type a city name..." value="{{ city }}" autocomplete="off" required>
+                <div id="citySuggestions" class="autocomplete-popover"></div>
+            </div>
+            <button type="submit" class="submit-action btn-blue">Search</button>
         </form>
 
         {% if weather_error %}
-            <p class="error-msg">{{ weather_error }}</p>
+            <div class="status-banner error-banner">
+                <i data-lucide="info"></i>
+                <span>{{ weather_error }}</span>
+            </div>
         {% endif %}
 
         {% if weather_info %}
-        <div class="weather-result">
-            <div class="weather-main">
-                <img src="https://openweathermap.org/img/wn/{{ weather_info.icon }}@2x.png" alt="weather icon">
-                <div>
-                    <h3>{{ weather_info.city }}, {{ weather_info.country }}</h3>
-                    <p class="temp">{{ weather_info.temp }}°C</p>
-                    <p class="desc">{{ weather_info.description }}</p>
+        <div class="fade-in-entry">
+            <div class="weather-hero">
+                <div class="hero-details">
+                    <h3>{{ weather_info.city }}, <span class="dim-text">{{ weather_info.country }}</span></h3>
+                    <span class="badge-status">{{ weather_info.description | title }}</span>
+                </div>
+                <div class="hero-degrees">
+                    {{ weather_info.temp }}<span class="unit-marker">°C</span>
                 </div>
             </div>
 
-            <div class="weather-stats">
-                <div><span>Feels Like</span><strong>{{ weather_info.feels_like }}°C</strong></div>
-                <div><span>Humidity</span><strong>{{ weather_info.humidity }}%</strong></div>
-                <div><span>Wind Speed</span><strong>{{ weather_info.wind_speed }} m/s</strong></div>
+            <div class="data-strip">
+                <div class="strip-cell">
+                    <span class="cell-label">RealFeel</span>
+                    <span class="cell-data">{{ weather_info.feels_like }}°</span>
+                </div>
+                <div class="strip-cell">
+                    <span class="cell-label">Humidity</span>
+                    <span class="cell-data">{{ weather_info.humidity }}%</span>
+                </div>
+                <div class="strip-cell">
+                    <span class="cell-label">Wind</span>
+                    <span class="cell-data">{{ weather_info.wind_speed }} m/s</span>
+                </div>
             </div>
 
             {% if weather_info.forecast %}
-            <div class="forecast-chart-wrapper">
-                <canvas id="forecastChart"
-                    data-labels="{{ weather_info.forecast | map(attribute='date') | list | tojson }}"
-                    data-temps="{{ weather_info.forecast | map(attribute='temp') | list | tojson }}">
-                </canvas>
-            </div>
-
-            <div class="forecast-cards">
-                {% for day in weather_info.forecast %}
-                <div class="forecast-day">
-                    <span>{{ day.date }}</span>
-                    <img src="https://openweathermap.org/img/wn/{{ day.icon }}.png" alt="icon">
-                    <strong>{{ day.temp }}°C</strong>
+            <div class="extended-forecast">
+                <h3>5-Day Trend</h3>
+                <div class="days-flex">
+                    {% for day in weather_info.forecast %}
+                    <div class="day-card">
+                        <span class="day-name">{{ day.date }}</span>
+                        <img src="https://openweathermap.org/img/wn/{{ day.icon }}@2x.png" alt="weather status text">
+                        <span class="day-reading">{{ day.temp }}°</span>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
             {% endif %}
+        </div>
+        {% else %}
+        <div class="blank-state">
+            <i data-lucide="compass" class="blank-icon"></i>
+            <p>Please enter a destination above to display accurate real-time weather information metrics.</p>
         </div>
         {% endif %}
     </div>
 
-    <!-- CURRENCY CARD -->
-    <div class="card">
-        <h2>💱 Currency Converter</h2>
-        <form method="POST" class="currency-form">
+    <!-- CONVERTER WIDGET -->
+    <div class="content-panel conversion-panel">
+        <div class="panel-header">
+            <div class="icon-avatar avatar-purple">
+                <i data-lucide="wallet"></i>
+            </div>
+            <div>
+                <h2>Currency Converter</h2>
+                <p>Convert global foreign exchange values instantly</p>
+            </div>
+        </div>
+
+        <form method="POST" class="stacked-form">
             <input type="hidden" name="form_type" value="currency">
-            <input type="number" name="amount" placeholder="Amount" step="any" value="1" required>
-            <div class="currency-row">
-                <input list="currencyList" name="base_currency" placeholder="From (e.g. USD)" autocomplete="off" required>
-                <span>→</span>
-                <input list="currencyList" name="target_currency" placeholder="To (e.g. INR)" autocomplete="off" required>
+            
+            <div class="form-input-stack">
+                <label class="control-label">Amount to Transfer</label>
+                <input type="number" name="amount" placeholder="0.00" step="any" value="1" required class="large-input">
+            </div>
+
+            <div class="dual-column">
+                <div class="form-input-stack">
+                    <label class="control-label">From</label>
+                    <input list="currencyList" name="base_currency" placeholder="USD" autocomplete="off" required>
+                </div>
+                <div class="form-input-stack">
+                    <label class="control-label">To</label>
+                    <input list="currencyList" name="target_currency" placeholder="EUR" autocomplete="off" required>
+                </div>
             </div>
 
             <datalist id="currencyList">
@@ -82,32 +125,36 @@
                 <option value="CHF">CHF - Swiss Franc</option>
                 <option value="CNY">CNY - Chinese Yuan</option>
                 <option value="SGD">SGD - Singapore Dollar</option>
-                <option value="AED">AED - UAE Dirham</option>
-                <option value="NZD">NZD - New Zealand Dollar</option>
-                <option value="ZAR">ZAR - South African Rand</option>
-                <option value="SEK">SEK - Swedish Krona</option>
-                <option value="KRW">KRW - South Korean Won</option>
-                <option value="BRL">BRL - Brazilian Real</option>
-                <option value="RUB">RUB - Russian Ruble</option>
-                <option value="MXN">MXN - Mexican Peso</option>
-                <option value="HKD">HKD - Hong Kong Dollar</option>
-                <option value="THB">THB - Thai Baht</option>
             </datalist>
 
-            <button type="submit">Convert</button>
+            <button type="submit" class="submit-action btn-purple">Convert Currency</button>
         </form>
 
         {% if conversion_error %}
-            <p class="error-msg">{{ conversion_error }}</p>
+            <div class="status-banner error-banner">
+                <i data-lucide="alert-triangle"></i>
+                <span>{{ conversion_error }}</span>
+            </div>
         {% endif %}
 
         {% if conversion_info %}
-        <div class="conversion-result">
-            <p class="conversion-main">
-                {{ conversion_info.amount }} {{ conversion_info.base }} =
-                <strong>{{ conversion_info.converted }} {{ conversion_info.target }}</strong>
-            </p>
-            <p class="conversion-rate">1 {{ conversion_info.base }} = {{ conversion_info.rate }} {{ conversion_info.target }}</p>
+        <div class="fade-in-entry">
+            <div class="conversion-display-box">
+                <span class="box-heading">Conversion Results</span>
+                <div class="conversion-math">
+                    <p class="base-math-row">{{ conversion_info.amount }} {{ conversion_info.base }} =</p>
+                    <h2>{{ conversion_info.converted }} <span class="highlight-code">{{ conversion_info.target }}</span></h2>
+                </div>
+                <div class="conversion-footer-row">
+                    <i data-lucide="trending-up"></i>
+                    <span>Market Rate: 1 {{ conversion_info.base }} = {{ conversion_info.rate }} {{ conversion_info.target }}</span>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="blank-state">
+            <i data-lucide="banknote" class="blank-icon"></i>
+            <p>Input desired numbers and base currencies to run immediate global financial conversions.</p>
         </div>
         {% endif %}
     </div>

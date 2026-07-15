@@ -3,21 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Weather & Currency Dashboard{% endblock %}</title>
+    <title>{% block title %}Dashboard{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Premium Google Font integration for modern, clean interface -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <nav class="navbar">
-        <span class="logo">🌦️ WeatherCurrency</span>
+    <nav class="app-nav">
+        <div class="nav-wrapper">
+            <div class="brand">
+                <i data-lucide="layout-grid" class="brand-icon"></i>
+                <h1>Daily Updates</h1>
+            </div>
+            <div class="live-clock" id="liveClock">--:--</div>
+        </div>
     </nav>
 
-    <div class="container">
+    <main class="main-content">
         {% block content %}{% endblock %}
-    </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>Developed by CodexxNinja &bull; 2026</p>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        lucide.createIcons();
+        function runClock() {
+            const el = document.getElementById('liveClock');
+            if(el) {
+                const now = new Date();
+                el.textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            }
+        }
+        setInterval(runClock, 30000);
+        runClock();
+    </script>
 </body>
 </html>
