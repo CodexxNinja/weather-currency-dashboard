@@ -25,7 +25,7 @@
 
 ##  Live Demo
 
-> **Coming Soon** — Replace with your deployed application URL.
+> **https://weather-currency-dashboard.onrender.com** 
 
 ---
 
@@ -155,6 +155,6 @@ http://127.0.0.1:5000
 
 ---
 
-## 📄 License
+##  License
 
 Licensed under the **MIT License**.
