@@ -19,7 +19,7 @@
 
 ##  Overview
 
-> A **full-stack Flask application** that combines **live weather forecasting**, **interactive 5-day visualization**, and a **real-time currency converter** in one responsive dashboard.
+> A **full-stack Flask application** that combines **live weather forecasting**, **interactive 5-day visualization**, and a **real-time currency converter** in one responsive **dashboard**.
 
 ---
 
