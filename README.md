@@ -68,7 +68,7 @@
 | Frontend | HTML5, CSS3, JavaScript |
 | Templates | Jinja2 |
 | Visualization | Chart.js |
-| APIs | **OpenWeatherMap**, Frankfurter API |
+| APIs | **OpenWeatherMap**, **Frankfurter API** |
 
 ---
 
