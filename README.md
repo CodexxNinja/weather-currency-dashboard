@@ -64,7 +64,7 @@
 
 | Layer | Technologies |
 |------|--------------|
-| Backend | Python, Flask |
+| Backend | **Python**, Flask |
 | Frontend | HTML5, CSS3, JavaScript |
 | Templates | Jinja2 |
 | Visualization | Chart.js |
