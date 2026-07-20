@@ -117,7 +117,7 @@ weather-currency-dashboard/
 
 ---
 
-##  Local Setup
+##  **Local Setup**
 
 ```bash
 git clone https://github.com/CodexxNinja/weather-currency-dashboard.git
