@@ -29,7 +29,7 @@
 
 ---
 
-##  Features
+##  **Features**
 
 ###  Weather Dashboard
 - Real-time weather conditions
