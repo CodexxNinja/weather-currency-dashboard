@@ -1,6 +1,6 @@
 <div align="center">
 
-# Weather & Currency Dashboard
+# **Weather & Currency Dashboard**
 
 <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=700&size=28&duration=3500&pause=1000&color=0EA5E9&center=true&vCenter=true&width=800&lines=Real-Time+Weather+Dashboard;5-Day+Forecast+Visualization;Live+Currency+Converter;Flask+%7C+Chart.js+%7C+REST+APIs" />
 
