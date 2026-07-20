@@ -72,7 +72,7 @@
 
 ---
 
-##  Architecture
+##  **Architecture**
 
 ```text
 User
